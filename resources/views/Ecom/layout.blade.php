@@ -21,7 +21,7 @@
     @yield('content')
     @include('Ecom.partials.shopping_cart_modal')
     <!-- Javascript -->
-    <!-- <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script> -->
+    <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
     <script src="{{ asset('assets/frontend/js/carousel.js') }}"></script>
