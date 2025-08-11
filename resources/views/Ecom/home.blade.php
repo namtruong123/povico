@@ -1657,7 +1657,7 @@ $(function(){
     });
 
     $autocompleteBox.on('click', 'li[data-slug]', function(){
-        window.location.href = '/san-pham/' + $(this).data('slug');
+        window.location.href = '/product/' + $(this).data('slug');
     });
 
     // Ẩn autocomplete khi blur
