@@ -11,7 +11,9 @@ class HomeController extends Controller
         $categories = \App\Models\Category::all();
         $newProducts = \App\Models\Product::with('attribute')->where('is_new', 1)->orderByDesc('created_at')->take(8)->get();
         $lookbooks = \App\Models\Lookbook::all();
-        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks'));
+        $posts = \App\Models\Post::latest()->take(3)->get(); // Thêm dòng này
+
+        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks', 'posts'));
     }
 
     public function about()

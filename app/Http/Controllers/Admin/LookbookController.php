@@ -30,15 +30,19 @@ class LookbookController extends Controller
             'hover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'product_link' => 'nullable|string|max:255',
             'price' => 'nullable|numeric',
-            'position' => 'nullable|string|max:50',
+            'position' => 'nullable|string|max:255',
         ]);
 
-        // Xử lý upload ảnh
+        // Upload ảnh vào public/assets/backend/images/lookbooks
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads/lookbooks', 'public');
+            $imageName = time().'_'.uniqid().'.'.$request->image->extension();
+            $request->image->move(public_path('assets/backend/images/lookbooks'), $imageName);
+            $data['image'] = 'assets/backend/images/lookbooks/' . $imageName;
         }
         if ($request->hasFile('hover_image')) {
-            $data['hover_image'] = $request->file('hover_image')->store('uploads/lookbooks', 'public');
+            $hoverImageName = time().'_hover_'.uniqid().'.'.$request->hover_image->extension();
+            $request->hover_image->move(public_path('assets/backend/images/lookbooks'), $hoverImageName);
+            $data['hover_image'] = 'assets/backend/images/lookbooks/' . $hoverImageName;
         }
 
         Lookbook::create($data);
@@ -59,14 +63,18 @@ class LookbookController extends Controller
             'hover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'product_link' => 'nullable|string|max:255',
             'price' => 'nullable|numeric',
-            'position' => 'nullable|string|max:50',
+            'position' => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads/lookbooks', 'public');
+            $imageName = time().'_'.uniqid().'.'.$request->image->extension();
+            $request->image->move(public_path('assets/backend/images/lookbooks'), $imageName);
+            $data['image'] = 'assets/backend/images/lookbooks/' . $imageName;
         }
         if ($request->hasFile('hover_image')) {
-            $data['hover_image'] = $request->file('hover_image')->store('uploads/lookbooks', 'public');
+            $hoverImageName = time().'_hover_'.uniqid().'.'.$request->hover_image->extension();
+            $request->hover_image->move(public_path('assets/backend/images/lookbooks'), $hoverImageName);
+            $data['hover_image'] = 'assets/backend/images/lookbooks/' . $hoverImageName;
         }
 
         $lookbook->update($data);

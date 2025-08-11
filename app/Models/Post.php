@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lookbook extends Model
+class Post extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
+        'content',
         'image',
-        'hover_image',
-        'product_link',
-        'price',
-        'position',
     ];
 }
