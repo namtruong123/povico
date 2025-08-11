@@ -168,6 +168,15 @@
                     Tin tức
                 </a>
             </li>
+            <li class="menu-title">
+                <span>Quản lý giao diện</span>
+            </li>
+            <li>
+                <a href="{{ route('admin.footers.edit', 1) }}">
+                    <i class="ti ti-settings"></i>
+                    Chỉnh sửa Footer
+                </a>
+            </li>
             <!-- Thêm các menu khác tùy ý -->
         </ul>
     </div>
