@@ -231,42 +231,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-<script>
-$(function(){
-  function refreshCart(){
-    $.getJSON('{{ route("cart.modal") }}', function(json){
-      $('#shoppingCart .tf-mini-cart-items').html(json.items);
-      $('#shoppingCart .tf-totals-total-value').text(json.total);
-      $('.count-box.text-button-small').text(json.count);
-    });
-  }
-
-  // Khi trang vừa load, cập nhật số đơn hàng trên icon
-  refreshCart();
-
-  // Add to cart
-  $(document).on('click','.add-to-cart-btn',function(e){
-    e.preventDefault();
-    $.post('{{route("cart.add")}}',{
-      _token:'{{csrf_token()}}',
-      product_id:$(this).data('product-id'),
-      quantity:$(this).data('quantity')||1
-    },function(res){
-      if(res.success){
-        refreshCart();
-        // Mở modal giỏ hàng đúng chuẩn Bootstrap 5
-        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-          var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('shoppingCart'));
-          modal.show();
-        } else if ($('#shoppingCart').modal) {
-          $('#shoppingCart').modal('show');
-        }
-      }
-    });
-  });
-
-  // Khi modal mở cũng load lại giỏ hàng
-  $('#shoppingCart').on('show.bs.modal', refreshCart);
-});
-</script>
 @endpush

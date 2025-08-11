@@ -12,14 +12,13 @@ class PostController extends Controller
         return view('Ecom.posts.index', compact('posts'));
     }
 
-    public function show($slug, $id)
+    public function show($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('slug', $slug)->firstOrFail();
         $relatedPosts = Post::where('id', '!=', $post->id)
             ->latest()
             ->take(3)
             ->get();
-        // $cart = ... // lấy giỏ hàng nếu cần
-        return view('Ecom.posts.show', compact('post', 'relatedPosts', 'cart'));
+        return view('Ecom.posts.show', compact('post', 'relatedPosts'));
     }
 }

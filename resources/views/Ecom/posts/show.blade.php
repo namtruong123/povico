@@ -70,13 +70,13 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         @if($item->image)
-                            <a href="{{ route('posts.show', $item->id) }}">
+                            <a href="{{ route('posts.show', ['slug' => Str::slug($item->title), 'id' => $item->id]) }}">
                                 <img src="{{ asset($item->image) }}" class="card-img-top" alt="{{ $item->title }}">
                             </a>
                         @endif
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{ route('posts.show', ['slug' => Str::slug($item->title), 'id' => $item->id]) }}">
+                                <a href="{{ route('posts.show', ['slug' => $item->slug]) }}">
                                     {{ $item->title }}
                                 </a>
                             </h5>
@@ -93,3 +93,4 @@
     @endif
 </div>
 @endsection
+@php use Illuminate\Support\Str; @endphp

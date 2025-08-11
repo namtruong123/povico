@@ -1,6 +1,11 @@
 @extends('admin.admin')
 
 @section('content')
+<style>
+    .cke_notification, .cke_notification_message {
+        display: none !important;
+    }
+</style>
 <div class="container py-4">
     <div class="card shadow">
         <div class="card-header">

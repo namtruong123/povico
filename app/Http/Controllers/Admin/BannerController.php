@@ -22,7 +22,7 @@ class BannerController extends Controller
     {
         $data = $request->validate([
             'title' => 'nullable|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'link' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
         ]);

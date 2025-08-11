@@ -215,219 +215,100 @@
     </section>
 
     <!-- Top Sellers -->
-    <section class="flat-spacing-2 section-tTop-sellers">
+    <section class="flat-spacing-2 pt-0 section-best-sellers">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="heading-section text-center">
-                        <h3 class="wow fadeInUp">Shop Top Sellers</h3>
-                        <p class="text-body-default text_secondary wow fadeInUp" data-wow-delay="0.1s">Fresh styles just
-                            in! Elevate your look.</p>
+                        <h3 class="wow fadeInUp">Sản phẩm bán chạy</h3>
+                        <p class="text-body-default text_secondary wow fadeInUp" data-wow-delay="0.1s">
+                            Những sản phẩm được khách hàng lựa chọn nhiều nhất!
+                        </p>
                     </div>
                     <div class="sw-button-over">
                         <div class="swiper tf-sw-collection" data-preview="3" data-tablet="3" data-mobile-sm="2"
                             data-mobile="1" data-space-lg="30" data-space-md="20" data-space="15" data-loop="false">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="card-product style-1">
-                                        <div class="card-product-wrapper">
-                                            <a href="product-detail.html" class="image-wrap">
-                                                <img class="lazyload img-product"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-10.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-10.jpg') }}"
-                                                    alt="image-product">
-                                                <img class="lazyload img-hover"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-10.1.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-10.1.jpg') }}"
-                                                    alt="image-product">
-                                            </a>
-                                            <div class="list-product-btn">
-                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                    <span class="icon icon-heart"></span>
-                                                    <span class="tooltip">Wishlist</span>
+                                @forelse($bestSellerProducts as $product)
+                                    <div class="swiper-slide">
+                                        <div class="card-product style-1">
+                                            <div class="card-product-wrapper">
+                                                <a href="{{ route('product.detail', $product->slug) }}" class="image-wrap">
+                                                    <img class="lazyload img-product"
+                                                        src="{{ asset($product->main_image) }}"
+                                                        alt="{{ $product->name }}">
+                                                    @if($product->hover_image)
+                                                        <img class="lazyload img-hover"
+                                                            src="{{ asset($product->hover_image) }}"
+                                                            alt="{{ $product->name }}">
+                                                    @endif
                                                 </a>
-                                                <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                                    class="box-icon compare ">
-                                                    <span class="icon icon-compare"></span>
-                                                    <span class="tooltip">Compare</span>
-                                                </a>
-                                                <a href="#quickView" data-bs-toggle="modal"
-                                                    class="box-icon quickview tf-btn-loading">
-                                                    <span class="icon icon-eye"></span>
-                                                    <span class="tooltip">Quick View</span>
-                                                </a>
+                                                {{-- Tag HOT --}}
+                                                <div class="product-labels">
+                                                    <span class="badge badge-danger" style="position:absolute;top:10px;left:10px;z-index:2;">HOT</span>
+                                                </div>
+                                                @if($product->sale_price && $product->sale_price < $product->price)
+                                                    <div class="on-sale-wrap">
+                                                        <span class="on-sale-item">
+                                                            -{{ round(100 - ($product->sale_price / $product->price * 100)) }}%
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                                <div class="list-product-btn">
+                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                        <span class="icon icon-heart"></span>
+                                                        <span class="tooltip">Wishlist</span>
+                                                    </a>
+                                                    <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
+                                                        class="box-icon compare ">
+                                                        <span class="icon icon-compare"></span>
+                                                        <span class="tooltip">Compare</span>
+                                                    </a>
+                                                    <a href="#quickView" data-bs-toggle="modal"
+                                                        class="box-icon quickview tf-btn-loading">
+                                                        <span class="icon icon-eye"></span>
+                                                        <span class="tooltip">Quick View</span>
+                                                    </a>
+                                                </div>
+                                                <div class="list-btn-main">
+                                                    <form method="POST" action="{{ route('cart.add') }}" style="display:inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        <button class="btn-main-product" type="submit">Thêm vào giỏ</button>
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div class="list-btn-main">
-                                                <a href="#shoppingCart" data-bs-toggle="modal"
-                                                    class="btn-main-product">Add To
-                                                    cart</a>
+                                            <div class="card-product-info ">
+                                                <a href="{{ route('product.detail', $product->slug) }}" class="text-body-default link">
+                                                    {{ $product->name }}
+                                                </a>
+                                                <div class="price text-body-default ">
+                                                    @if(empty($product->price) || $product->price == 0)
+                                                        <span class="text-danger">Liên hệ</span>
+                                                    @elseif($product->sale_price && $product->sale_price < $product->price)
+                                                        <span class="text-caption-1 old-price">{{ number_format($product->price) }}₫</span>
+                                                        {{ number_format($product->sale_price) }}₫
+                                                    @else
+                                                        {{ number_format($product->price) }}₫
+                                                    @endif
+                                                </div>
+                                                @if (isset($product->attribute) && !empty($product->attribute->color))
+                                                    <ul class="list-color-product">
+                                                        <li class="list-color-item color-swatch active">
+                                                            <span class="d-none text-capitalize color-filter">{{ $product->attribute->name }}</span>
+                                                            <span class="swatch-value" style="background:{{ $product->attribute->color }}"></span>
+                                                        </li>
+                                                    </ul>
+                                                @endif
                                             </div>
-                                        </div>
-                                        <div class="card-product-info ">
-                                            <a href="product-detail.html" class="text-body-default link">Double
-                                                Standing
-                                                Desk</a>
-                                            <div class="price text-body-default "><span
-                                                    class="text-caption-1 old-price">$98.00</span>$79.99</div>
-                                            <ul class="list-color-product">
-                                                <li class="list-color-item color-swatch active">
-                                                    <span class="d-none text-capitalize color-filter">Light
-                                                        Blue</span>
-                                                    <span class="swatch-value bg-light-blue"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-10.2.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-10.2.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                                <li class="list-color-item color-swatch">
-                                                    <span class="d-none text-capitalize color-filter">Light
-                                                        Blue</span>
-                                                    <span class="swatch-value bg-light-blue-2"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-10.3.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-10.3.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                            </ul>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-product style-1">
-                                        <div class="card-product-wrapper">
-                                            <a href="product-detail.html" class="image-wrap">
-                                                <img class="lazyload img-product"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-11.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-11.jpg') }}"
-                                                    alt="image-product">
-                                                <img class="lazyload img-hover"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-11.1.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-11.1.jpg') }}"
-                                                    alt="image-product">
-                                            </a>
-                                            <div class="on-sale-wrap"><span class="on-sale-item">-25%</span>
-                                            </div>
-                                            <div class="list-product-btn">
-                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                    <span class="icon icon-heart"></span>
-                                                    <span class="tooltip">Wishlist</span>
-                                                </a>
-                                                <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                                    class="box-icon compare ">
-                                                    <span class="icon icon-compare"></span>
-                                                    <span class="tooltip">Compare</span>
-                                                </a>
-                                                <a href="#quickView" data-bs-toggle="modal"
-                                                    class="box-icon quickview tf-btn-loading">
-                                                    <span class="icon icon-eye"></span>
-                                                    <span class="tooltip">Quick View</span>
-                                                </a>
-                                            </div>
-                                            <div class="list-btn-main">
-                                                <a href="#shoppingCart" data-bs-toggle="modal"
-                                                    class="btn-main-product">Add To
-                                                    cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="card-product-info ">
-                                            <a href="product-detail.html" class="text-body-default link">Duo
-                                                Standing Desk</a>
-                                            <div class="price text-body-default "><span
-                                                    class="text-caption-1 old-price">$98.00</span>$89.99</div>
-                                            <ul class="list-color-product">
-                                                <li class="list-color-item color-swatch active">
-                                                    <span class="d-none text-capitalize color-filter">Light
-                                                        Orange</span>
-                                                    <span class="swatch-value bg-light-orange"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-11.2.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-11.2.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                                <li class="list-color-item color-swatch">
-                                                    <span class="d-none text-capitalize color-filter">Light
-                                                        Grey</span>
-                                                    <span class="swatch-value bg-light-grey"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-11.3.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-11.3.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-product style-1">
-                                        <div class="card-product-wrapper">
-                                            <a href="product-detail.html" class="image-wrap">
-                                                <img class="lazyload img-product"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-12.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-12.jpg') }}"
-                                                    alt="image-product">
-                                                <img class="lazyload img-hover"
-                                                    data-src="{{ asset('assets/frontend/images/shop/product-12.1.jpg') }}"
-                                                    src="{{ asset('assets/frontend/images/shop/product-12.1.jpg') }}"
-                                                    alt="image-product">
-                                            </a>
-                                            <div class="list-product-btn">
-                                                <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                    <span class="icon icon-heart"></span>
-                                                    <span class="tooltip">Wishlist</span>
-                                                </a>
-                                                <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                                    class="box-icon compare ">
-                                                    <span class="icon icon-compare"></span>
-                                                    <span class="tooltip">Compare</span>
-                                                </a>
-                                                <a href="#quickView" data-bs-toggle="modal"
-                                                    class="box-icon quickview tf-btn-loading">
-                                                    <span class="icon icon-eye"></span>
-                                                    <span class="tooltip">Quick View</span>
-                                                </a>
-                                            </div>
-                                            <div class="list-btn-main">
-                                                <a href="#shoppingCart" data-bs-toggle="modal"
-                                                    class="btn-main-product">Add To
-                                                    cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="card-product-info ">
-                                            <a href="product-detail.html" class="text-body-default link">Alumina
-                                                Lamp</a>
-                                            <div class="price text-body-default ">$69.99</div>
-                                            <ul class="list-color-product">
-                                                <li class="list-color-item color-swatch active">
-                                                    <span class="d-none text-capitalize color-filter">Light Brown</span>
-                                                    <span class="swatch-value bg-light-brown"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-12.2.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-12.2.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                                <li class="list-color-item color-swatch">
-                                                    <span class="d-none text-capitalize color-filter">Light Bink</span>
-                                                    <span class="swatch-value bg-light-pink"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-12.3.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-12.3.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                                <li class="list-color-item color-swatch">
-                                                    <span class="d-none text-capitalize color-filter">Light Grey</span>
-                                                    <span class="swatch-value bg-dark-grey-2"></span>
-                                                    <img class="lazyload"
-                                                        data-src="{{ asset('assets/frontend/images/shop/product-12.4.jpg') }}"
-                                                        src="{{ asset('assets/frontend/images/shop/product-12.4.jpg') }}"
-                                                        alt="image-product">
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                @empty
+                                    <div class="text-center py-4 w-100">Không có sản phẩm bán chạy.</div>
+                                @endforelse
                             </div>
-                        </div>
-                        <div class="sw-pagination-collection sw-dots  type-circle d-flex justify-content-center">
+                            <div class="sw-pagination-collection sw-dots  type-circle d-flex justify-content-center"></div>
                         </div>
                     </div>
                 </div>
@@ -1363,98 +1244,7 @@
 
     <!-- shoppingCart -->
     <!-- Modal Giỏ hàng -->
-    <div class="modal fullRight fade modal-shopping-cart" id="shoppingCart">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- You May Also Like -->
-                <div class="tf-minicart-recommendations">
-                    <h6 class="title">You May Also Like</h6>
-                    <div class="wrap-recommendations">
-                        <div class="list-cart">
-                            @if(!empty($recommendProducts))
-                                @foreach($recommendProducts as $product)
-                                    <div class="list-cart-item">
-                                        <div class="image">
-                                            <img class="lazyload" src="{{ asset($product->main_image) }}" alt="{{ $product->name }}">
-                                        </div>
-                                        <div class="content">
-                                            <div class="name">
-                                                <a class="link text-line-clamp-1" href="{{ route('product.detail', $product->slug) }}">{{ $product->name }}</a>
-                                            </div>
-                                            <div class="cart-item-bot">
-                                                <div class="text-button price">{{ number_format($product->sale_price ?? $product->price) }}₫</div>
-                                                <form method="POST" action="{{ route('cart.add') }}">
-                                                    @csrf
-                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                    <input type="hidden" name="quantity" value="1">
-                                                    <button type="submit" class="link text-button">Add to cart</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="text-center py-3">No recommendations.</div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <!-- Shopping Cart -->
-                <div class="d-flex flex-column flex-grow-1 h-100">
-                    <div class="header">
-                        <h5 class="title">Shopping Cart</h5>
-                        <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                    </div>
-                    <div class="wrap">
-                        <div class="tf-mini-cart-threshold">
-                            <div class="tf-progress-bar">
-                                <div class="value" style="width: 0%;" data-progress="75">
-                                    <i class="icon icon-shipping"></i>
-                                </div>
-                            </div>
-                            <div class="text-caption-1">
-                                Congratulations! You've got free shipping!
-                            </div>
-                        </div>
-                        <div class="tf-mini-cart-wrap">
-                            <div class="tf-mini-cart-main">
-                                <div class="tf-mini-cart-sroll">
-                                    <div class="tf-mini-cart-items">
-                                        @if(empty($cart))
-                                            <div class="text-center py-4">Giỏ hàng trống.</div>
-                                        @else
-                                            @include('Ecom.order._cart_modal', ['cart' => $cart])
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tf-mini-cart-bottom">
-                                <div class="tf-mini-cart-tool">
-                                    <div class="tf-mini-cart-view-checkout d-flex gap-2 mb-2">
-                                        <a href="{{ route('cart.index') }}" class="tf-btn btn-white has-border flex-fill">Xem giỏ hàng</a>
-                                        <a href="{{ route('checkout') }}" class="tf-btn btn-onsurface flex-fill">Thanh toán</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="link btn-line btn-continue-shopping" href="#" data-bs-dismiss="modal">Tiếp tục mua hàng</a>
-                                    </div>
-                                </div>
-                                <div class="tf-mini-cart-bottom-wrap">
-                                    <div class="tf-cart-totals-discounts">
-                                        <h5>Tổng tiền</h5>
-                                        <h5 class="tf-totals-total-value">
-                                            {{ number_format(collect($cart)->sum(function($item){return $item['price']*$item['quantity'];}), 0, ',', '.') }}₫
-                                        </h5>
-                                    </div>
-                                    <!-- ...checkbox, checkout giữ nguyên... -->
-                                </div>
-                                <!-- ...note, shipping, coupon giữ nguyên... -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  
     <!-- /shoppingCart -->
 
     <!-- .quickView -->
@@ -2544,11 +2334,10 @@ $(function(){
     $.getJSON('{{ route("cart.modal") }}', function(json){
       $('#shoppingCart .tf-mini-cart-items').html(json.items);
       $('#shoppingCart .tf-totals-total-value').text(json.total);
-      $('.count-box.text-button-small').text(json.count); // cập nhật số đơn hàng trên icon
+      $('.count-box.text-button-small').text(json.count);
     });
   }
 
-  // Khi trang vừa load, cập nhật số đơn hàng trên icon
   refresh();
 
   // Add to cart
@@ -2559,7 +2348,14 @@ $(function(){
       product_id:$(this).data('product-id'),
       quantity:$(this).data('quantity')||1
     },function(res){
-      if(res.success) refresh();
+      if(res.success) {
+        refresh();
+        // Mở modal giỏ hàng
+        if (typeof bootstrap !== 'undefined') {
+          var modal = new bootstrap.Modal(document.getElementById('shoppingCart'));
+          modal.show();
+        }
+      }
     });
   });
 
@@ -2575,7 +2371,7 @@ $(function(){
     },function(res){ if(res.success) refresh(); });
   });
 
-  // Remove sản phẩm (chỉ dùng 1 sự kiện cho cả 2 class)
+  // Remove sản phẩm
   $(document).on('click','.tf-btn-remove, .btn-remove-item',function(e){
     e.preventDefault();
     let id=$(this).data('id');
@@ -2586,7 +2382,17 @@ $(function(){
   });
 
   // Khi modal mở cũng load lại giỏ hàng
-  $('#shoppingCart').on('show.bs.modal', refresh);
+  document.getElementById('shoppingCart')?.addEventListener('show.bs.modal', refresh);
+
+  // Đảm bảo các nút mở modal đều hoạt động ở mọi trang
+  $(document).on('click', '[data-bs-toggle="modal"][data-bs-target="#shoppingCart"], a[href="#shoppingCart"]', function(e){
+    e.preventDefault();
+    if (typeof bootstrap !== 'undefined') {
+      var modal = new bootstrap.Modal(document.getElementById('shoppingCart'));
+      modal.show();
+    }
+    refresh();
+  });
 });
 </script>
 @endpush

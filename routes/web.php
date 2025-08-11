@@ -71,5 +71,5 @@ Route::get('orders/{order}', [\App\Http\Controllers\Admin\OrderController::class
 Route::get('/order/{order}', [\App\Http\Controllers\Ecom\OrderController::class, 'detail'])->name('order.detail');
 
 Route::get('/tin-tuc', [\App\Http\Controllers\Ecom\PostController::class, 'index'])->name('posts.index');
-Route::get('/tin-tuc/{slug}-{id}', [\App\Http\Controllers\Ecom\PostController::class, 'show'])
+Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\Ecom\PostController::class, 'show'])
     ->name('posts.show');

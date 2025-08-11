@@ -108,7 +108,7 @@
                             </li>
                             <!-- Tin tức -->
                             <li class="menu-item position-relative">
-                                <a href="#" class="item-link {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">TIN TỨC<i class="icon icon-down"></i></a>
+                                <a href="{{ route('posts.index') }}" class="item-link {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">TIN TỨC<i class="icon icon-down"></i></a>
                             </li>
                             <li class="menu-item">
                                 <a href="{{ route('about') }}" class="item-link {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">GIỚI THIỆU</a>
