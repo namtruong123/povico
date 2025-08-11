@@ -66,28 +66,28 @@
                                             alt="{{ $product->name }}">
                                     </a>
                                     <div class="list-product-btn">
-                                        <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                            <span class="icon icon-heart"></span>
-                                            <span class="tooltip">Wishlist</span>
-                                        </a>
-                                        <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                            class="box-icon compare ">
-                                            <span class="icon icon-compare"></span>
-                                            <span class="tooltip">Compare</span>
-                                        </a>
-                                    </div>
+                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                                        <span class="icon icon-heart"></span>
+                                                        <span class="tooltip">Wishlist</span>
+                                                    </a>
+                                                    <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
+                                                        class="box-icon compare ">
+                                                        <span class="icon icon-compare"></span>
+                                                        <span class="tooltip">Compare</span>
+                                                    </a>
+                                                    <a href="#quickView" data-bs-toggle="modal"
+                                                        class="box-icon quickview tf-btn-loading">
+                                                        <span class="icon icon-eye"></span>
+                                                        <span class="tooltip">Quick View</span>
+                                                    </a>
+                                                </div>
                                     <div class="list-btn-main">
                                         <form method="POST" action="{{ route('cart.add') }}" style="display:inline;">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <input type="hidden" name="quantity" value="1">
-                                            <button class="add-to-cart-btn" data-product-id="{{ $product->id }}" data-quantity="1">Thêm sản phẩm</button>
+                                            <button class="btn-main-product" type="submit">Thêm vào giỏ</button>
                                         </form>
-                                        <a href="#quickView" data-bs-toggle="modal"
-                                            class="box-icon quickview tf-btn-loading">
-                                            <span class="icon icon-eye"></span>
-                                            <span class="tooltip">Xem nhanh</span>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="card-product-info ">

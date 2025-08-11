@@ -6449,6 +6449,7 @@ form .cols > * {
 }
 .card-product.style-3 .list-btn-main {
   gap: 8px;
+  justify-content: center;
 }
 .card-product.style-4 .list-product-btn {
   gap: 0;
@@ -10871,6 +10872,7 @@ ul.list-text.type-number {
     transform: translateY(20px);
     opacity: 0;
     visibility: hidden;
+    justify-content: center;
   }
   .card-product.style-1:hover .list-btn-main,
   .card-product.style-1:hover .list-product-btn, .card-product.style-3:hover .list-btn-main,
