@@ -30,6 +30,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('lookbooks', \App\Http\Controllers\Admin\LookbookController::class);
     Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
+    Route::resource('footers', \App\Http\Controllers\Admin\FooterController::class)->middleware('auth');
 });
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('category/{slug}', [\App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('shop.category');
@@ -45,7 +46,6 @@ Route::get('/san-pham/infinite', [\App\Http\Controllers\Ecom\ProductController::
 Route::get('/san-pham/style/{style}', [\App\Http\Controllers\Ecom\ProductController::class, 'style'])->name('product.style');
 
 //cart
-// web.php
 use App\Http\Controllers\Ecom\CartController;
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add',    [CartController::class,'add'])->name('cart.add');

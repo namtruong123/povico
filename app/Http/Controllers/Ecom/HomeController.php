@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ecom;
 
 use App\Http\Controllers\Controller;
+use App\Models\Footer;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,9 @@ class HomeController extends Controller
             ->take(12)
             ->get();
 
-        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks', 'posts', 'saleProducts', 'bestSellerProducts'));
+        $footer = Footer::first(); // hoặc Footer::find(1)
+
+        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks', 'posts', 'saleProducts', 'bestSellerProducts', 'footer'));
     }
 
     public function about()
