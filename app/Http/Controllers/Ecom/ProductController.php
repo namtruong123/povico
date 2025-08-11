@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ecom;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -114,5 +115,27 @@ class ProductController extends Controller
 
         $products = $query->paginate(12);
         return view('Ecom.product.product_all', compact('products', 'style'));
+    }
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+        $products = Product::where('name', 'like', '%' . $q . '%')
+            ->orWhere('sku', 'like', '%' . $q . '%')
+            ->take(12)
+            ->get();
+
+        return response()->json([
+            'html' => view('Ecom.partials.search_results', compact('products'))->render()
+        ]);
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $q = $request->input('q');
+        $products = \App\Models\Product::where('name', 'like', '%' . $q . '%')
+            ->take(8)
+            ->get(['id', 'name', 'slug', 'main_image', 'price', 'sale_price']);
+
+        return response()->json($products);
     }
 }
