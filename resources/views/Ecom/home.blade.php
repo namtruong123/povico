@@ -2196,4 +2196,33 @@ $(function(){
   });
 });
 </script>
+<script>
+    $(document).on('show.bs.modal', '.modal', function () {
+        $('.modal-backdrop').remove(); // bỏ backdrop cũ
+    });
+
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        // Gỡ backdrop
+        $('.modal-backdrop').remove();
+
+        // Gỡ trạng thái modal-open
+        $('body').removeClass('modal-open').css({
+            'overflow': '',
+            'padding-right': ''
+        });
+
+        // Reset modal
+        $(this)
+            .removeClass('show')
+            .removeAttr('style')
+            .attr('aria-hidden', 'true')
+            .hide();
+    });
+
+    // Hàm đóng modal thủ công
+    function closeShoppingCart() {
+        $('#shoppingCart').modal('hide');
+    }
+</script>
+
 @endpush
