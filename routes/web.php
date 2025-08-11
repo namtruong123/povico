@@ -29,6 +29,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         ->name('products.deleteGallery');
     Route::resource('lookbooks', \App\Http\Controllers\Admin\LookbookController::class);
     Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
+    Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
 });
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('category/{slug}', [\App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('shop.category');
@@ -68,3 +69,7 @@ Route::get('/contact', [\App\Http\Controllers\Ecom\HomeController::class, 'conta
  Route::get('orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.orders.index');
 Route::get('orders/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.orders.show');
 Route::get('/order/{order}', [\App\Http\Controllers\Ecom\OrderController::class, 'detail'])->name('order.detail');
+
+Route::get('/tin-tuc', [\App\Http\Controllers\Ecom\PostController::class, 'index'])->name('posts.index');
+Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\Ecom\PostController::class, 'show'])
+    ->name('posts.show');

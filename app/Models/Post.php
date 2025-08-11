@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class Post extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
+        'content',
         'image',
-        'link',
-        'order',
     ];
 }

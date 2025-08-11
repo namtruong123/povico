@@ -11,7 +11,25 @@ class HomeController extends Controller
         $categories = \App\Models\Category::all();
         $newProducts = \App\Models\Product::with('attribute')->where('is_new', 1)->orderByDesc('created_at')->take(8)->get();
         $lookbooks = \App\Models\Lookbook::all();
-        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks'));
+        $posts = \App\Models\Post::latest()->take(3)->get();
+
+        $saleProducts = \App\Models\Product::with('attribute')
+            ->whereNotNull('sale_price')
+            ->whereNotNull('price')
+            ->where('sale_price', '>', 0)
+            ->where('price', '>', 0)
+            ->whereColumn('sale_price', '<', 'price')
+            ->orderByDesc('updated_at')
+            ->take(12)
+            ->get();
+
+        $bestSellerProducts = \App\Models\Product::with('attribute')
+            ->where('is_best_seller', 1)
+            ->orderByDesc('updated_at')
+            ->take(12)
+            ->get();
+
+        return view('Ecom.home', compact('categories', 'newProducts', 'lookbooks', 'posts', 'saleProducts', 'bestSellerProducts'));
     }
 
     public function about()

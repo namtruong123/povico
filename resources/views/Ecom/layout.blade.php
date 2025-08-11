@@ -18,9 +18,10 @@
 </head>
 <body class="preload-wrapper">
     @yield('content')
+    @include('Ecom.partials.shopping_cart_modal')
     <!-- Javascript -->
     <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/frontend/js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/carousel.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/bootstrap-select.min.js') }}"></script>
@@ -30,7 +31,7 @@
     <script src="{{ asset('assets/frontend/js/parallax.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/simpleParallaxVanilla.umd.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/main.js') }}"></script> 
     @stack('scripts')
 
     

@@ -159,6 +159,15 @@
                     Banner
                 </a>
             </li>
+            <li class="menu-title">
+                <span>Quản lý Tin tức</span>
+            </li>
+            <li>
+                <a href="{{ route('admin.posts.index') }}">
+                    <i class="ti ti-news"></i>
+                    Tin tức
+                </a>
+            </li>
             <!-- Thêm các menu khác tùy ý -->
         </ul>
     </div>
