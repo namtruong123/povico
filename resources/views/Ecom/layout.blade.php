@@ -1,0 +1,38 @@
+{{-- filepath: resources/views/Ecom/layout.blade.php --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@yield('title', 'Povico Door')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- font, icons, css -->
+    <link rel="stylesheet" href="{{ asset('assets/frontend/fonts/fonts.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/fonts/font-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo/favicon.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/favicon.png') }}">
+    @stack('head')
+</head>
+<body class="preload-wrapper">
+    @yield('content')
+    <!-- Javascript -->
+    <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/carousel.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/lazysize.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/wow.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/multiple-modal.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/parallax.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/simpleParallaxVanilla.umd.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+    @stack('scripts')
+
+    
+</body>
+</html>
