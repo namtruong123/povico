@@ -73,3 +73,5 @@ Route::get('/order/{order}', [\App\Http\Controllers\Ecom\OrderController::class,
 Route::get('/tin-tuc', [\App\Http\Controllers\Ecom\PostController::class, 'index'])->name('posts.index');
 Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\Ecom\PostController::class, 'show'])
     ->name('posts.show');
+Route::get('/search-products', [\App\Http\Controllers\Ecom\ProductController::class, 'search'])->name('products.search');
+Route::get('/autocomplete-products', [\App\Http\Controllers\Ecom\ProductController::class, 'autocomplete'])->name('products.autocomplete');
