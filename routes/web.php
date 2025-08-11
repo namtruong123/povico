@@ -28,6 +28,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::delete('products/gallery/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'deleteGallery'])
         ->name('products.deleteGallery');
     Route::resource('lookbooks', \App\Http\Controllers\Admin\LookbookController::class);
+    Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
 });
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('category/{slug}', [\App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('shop.category');

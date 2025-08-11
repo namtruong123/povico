@@ -150,6 +150,15 @@
                     Lookbook
                 </a>
             </li>
+            <li class="menu-title">
+                <span>Quản lý Banner</span>
+            </li>
+            <li>
+                <a href="{{ route('admin.banners.index') }}">
+                    <i class="ti ti-photo"></i>
+                    Banner
+                </a>
+            </li>
             <!-- Thêm các menu khác tùy ý -->
         </ul>
     </div>
