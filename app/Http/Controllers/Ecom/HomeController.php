@@ -37,7 +37,8 @@ class HomeController extends Controller
 
     public function about()
     {
-        return view('Ecom.about');
+        $about = \App\Models\AboutPage::first(); // Lấy bản ghi đầu tiên
+        return view('Ecom.about.about', compact('about'));
     }
 
     public function contact()

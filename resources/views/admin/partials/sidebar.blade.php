@@ -177,6 +177,15 @@
                     Chỉnh sửa Footer
                 </a>
             </li>
+            <li class="menu-title">
+                <span>Quản lý trang</span>
+            </li>
+            <li>
+                <a href="{{ route('admin.about.edit') }}">
+                    <i class="ti ti-info-circle"></i>
+                    Chỉnh sửa Giới thiệu
+                </a>
+            </li>
             <!-- Thêm các menu khác tùy ý -->
         </ul>
     </div>

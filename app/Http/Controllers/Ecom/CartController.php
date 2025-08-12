@@ -45,7 +45,7 @@ class CartController extends Controller
         if ($request->ajax()) {
             return response()->json(['success' => true, 'cart' => $cart]);
         }
-        return redirect()->route('cart')->with('success', 'Đã thêm vào giỏ hàng');
+        return redirect()->route('cart.index')->with('success', 'Đã thêm vào giỏ hàng');
     }
     public function update(Request $request)
     {

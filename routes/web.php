@@ -31,6 +31,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('banners', \App\Http\Controllers\Admin\BannerController::class);
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
     Route::resource('footers', \App\Http\Controllers\Admin\FooterController::class)->middleware('auth');
+    Route::get('about/edit', [\App\Http\Controllers\Admin\AboutPageController::class, 'edit'])->name('about.edit');
+    Route::post('about/update', [\App\Http\Controllers\Admin\AboutPageController::class, 'update'])->name('about.update');
 });
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('category/{slug}', [\App\Http\Controllers\Admin\CategoryController::class, 'show'])->name('shop.category');

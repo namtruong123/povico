@@ -132,16 +132,6 @@
                                 <span class="icon icon-search"></span>
                             </a>
                         </li>
-                        <li class="nav-account">
-                            <a href="{{ route('login') }}" class="nav-icon-item {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">
-                                <span class="icon icon-user"></span>
-                            </a>
-                        </li>
-                        <li class="nav-wishlist">
-                            <a href="{{ route('wishlist') }}" class="nav-icon-item {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">
-                                <span class="icon icon-heart"></span>
-                            </a>
-                        </li>
                         <li class="nav-cart">
                             <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">
                                 <span class="icon icon-cart"></span>
