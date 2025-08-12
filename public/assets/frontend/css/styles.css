@@ -4997,9 +4997,8 @@ form .cols > * {
   font-size: 22px;
 }
 .modal-shopping-cart .tf-mini-cart-tool {
-  padding: 0 32px;
-  height: 58px;
-  display: flex;
+  padding: 10px 20px;
+  height: 100px;
   justify-content: center;
   border-bottom: 1px solid var(--line);
 }
@@ -5019,7 +5018,7 @@ form .cols > * {
   transition: all 0.3s ease;
 }
 .modal-shopping-cart .tf-mini-cart-bottom-wrap {
-  padding: 24px 24px 20px;
+  padding: 15px 15px 10px;
 }
 .modal-shopping-cart .tf-mini-cart-bottom-wrap .tf-cart-totals-discounts {
   display: flex;
