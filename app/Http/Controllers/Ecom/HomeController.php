@@ -43,6 +43,6 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return view('Ecom.contact');
+        return view('Ecom.contact.contact');
     }
 }
