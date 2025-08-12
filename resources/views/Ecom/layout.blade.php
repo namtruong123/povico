@@ -35,7 +35,6 @@
     <script src="{{ asset('assets/frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script> 
     @stack('scripts')
-
     
 </body>
 </html>
