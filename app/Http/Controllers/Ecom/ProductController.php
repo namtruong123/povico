@@ -118,9 +118,15 @@ class ProductController extends Controller
     }
     public function search(Request $request)
     {
-        $q = $request->input('q');
-        $products = Product::where('name', 'like', '%' . $q . '%')
-            ->orWhere('sku', 'like', '%' . $q . '%')
+        $q = trim($request->input('q'));
+
+        $products = Product::query()
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('name', $q)
+                        ->orWhere('sku', $q);
+                });
+            })
             ->take(12)
             ->get();
 
@@ -131,8 +137,15 @@ class ProductController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $q = $request->input('q');
-        $products = \App\Models\Product::where('name', 'like', '%' . $q . '%')
+        $q = trim($request->input('q'));
+
+        $products = Product::query()
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('name', 'like', '%' . $q . '%')
+                        ->orWhere('sku', 'like', '%' . $q . '%');
+                });
+            })
             ->take(8)
             ->get(['id', 'name', 'slug', 'main_image', 'price', 'sale_price']);
 

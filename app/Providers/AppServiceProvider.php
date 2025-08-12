@@ -26,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
         $view->with('cart', session('cart', []));
         });
         View::composer('*', function ($view) {
+            $view->with('categories', \App\Models\Category::all());
+        });
+        View::composer('*', function ($view) {
         $view->with('footer', Footer::first());
     });
     }

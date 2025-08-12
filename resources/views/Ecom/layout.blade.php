@@ -20,6 +20,7 @@
 <body class="preload-wrapper">
     @yield('content')
     @include('Ecom.partials.shopping_cart_modal')
+    @include('Ecom.partials.search')
     @include('Ecom.partials.footer')
     <!-- Javascript -->
     <script src="{{ asset('assets/frontend/js/jquery.min.js') }}"></script>
