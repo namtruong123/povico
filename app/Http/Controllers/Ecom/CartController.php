@@ -4,78 +4,103 @@ namespace App\Http\Controllers\Ecom;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Models\Product;
 
 class CartController extends Controller
 {
-    // Hiển thị giỏ hàng
-    public function index(Request $request)
+     protected function formatCurrency($amount)
     {
-        $cart = session('cart', []);
+        return number_format($amount, 0, ',', '.') . '₫';
+    }
+
+    // Trang giỏ hàng
+     public function index()
+    {
+        $cart = Session::get('cart', []);
         return view('Ecom.order.cart', compact('cart'));
     }
 
-    // Thêm sản phẩm vào giỏ hàng
+    // Thêm sản phẩm vào giỏ hàng (ví dụ)
     public function add(Request $request)
     {
-        $productId = $request->input('product_id');
-        $quantity = max(1, (int)$request->input('quantity', 1));
+        //dd($request);
+        $productId = (int) $request->input('product_id');
+        $quantity = max(1, (int) $request->input('quantity', 1));
+
         $product = \App\Models\Product::find($productId);
         if (!$product) {
-            if ($request->ajax()) {
-                return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại']);
-            }
-            return redirect()->back()->with('error', 'Sản phẩm không tồn tại');
+            return $request->ajax()
+                ? response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại'])
+                : redirect()->back()->with('error', 'Sản phẩm không tồn tại');
         }
 
-        $cart = session('cart', []);
+        $cart = Session::get('cart', []);
+
         if (isset($cart[$productId])) {
             $cart[$productId]['quantity'] += $quantity;
         } else {
             $cart[$productId] = [
                 'product_id' => $product->id,
-                'name' => $product->name,
-                'slug' => $product->slug,
-                'image' => asset($product->main_image),
-                'price' => $product->price,
-                'quantity' => $quantity,
-                'variant' => $request->input('variant', ''),
+                'name'       => $product->name,
+                'slug'       => $product->slug,
+                'image'      => asset($product->main_image),
+                'price'      => $product->price,
+                'quantity'   => $quantity,
+                'variant'    => $request->input('variant', ''),
             ];
         }
-        session(['cart' => $cart]);
+
+        Session::put('cart', $cart);
+
         if ($request->ajax()) {
             return response()->json(['success' => true, 'cart' => $cart]);
+        } else {
+            return view('Ecom.partials.shopping_cart_modal', compact('cart'))->with('success', 'Đã thêm vào giỏ hàng');
         }
-        return redirect()->route('cart')->with('success', 'Đã thêm vào giỏ hàng');
     }
-    public function update(Request $request)
-    {
-        $cart = session('cart', []);
-        $id = $request->input('product_id');
-        $qty = max(1, (int)$request->input('quantity', 1));
-        if(isset($cart[$id])) {
-            $cart[$id]['quantity'] = $qty;
-            session(['cart' => $cart]);
-            return response()->json(['success' => true]);
-        }
-        return response()->json(['success' => false]);
+
+    // Cập nhật số lượng
+   public function update(Request $request)
+{
+    $productId = (int) $request->input('product_id');
+    $quantity = max(1, (int) $request->input('quantity', 1));
+
+    $cart = session('cart', []);
+
+    if (!isset($cart[$productId])) {
+        return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại trong giỏ hàng']);
     }
+
+    $cart[$productId]['quantity'] = $quantity;
+
+    // Lưu lại session
+    session(['cart' => $cart]);
+    session()->save();
+
+    $productTotal = $cart[$productId]['price'] * $quantity;
+    $cartTotal = array_reduce($cart, fn($sum, $item) => $sum + $item['price'] * $item['quantity'], 0);
+
+    return response()->json([
+        'success' => true,
+        'product_total' => number_format($productTotal, 0, ',', '.') . '₫',
+        'cart_total' => number_format($cartTotal, 0, ',', '.') . '₫',
+        'cart' => $cart,
+    ]);
+}
+
+
+    // Xóa sản phẩm
     public function remove(Request $request)
     {
-        $cart = session('cart', []);
-        $id = $request->input('product_id');
-        if(isset($cart[$id])) {
-            unset($cart[$id]);
-            session(['cart' => $cart]);
-            return response()->json(['success' => true]);
+        $productId = (int) $request->input('product_id');
+        $cart = Session::get('cart', []);
+
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            Session::put('cart', $cart);
+            return response()->json(['success' => true, 'cart' => $cart]);
         }
-        return response()->json(['success' => false]);
-    }
-    public function modal()
-    {
-        $cart = session('cart', []);
-        $items = view('Ecom.order._cart_modal', compact('cart'))->render();
-        $total = number_format(array_sum(array_map(fn($i)=>$i['price']*$i['quantity'], $cart)),0,',','.') . '₫';
-        $count = array_sum(array_column($cart,'quantity'));
-        return response()->json(compact('items','total','count'));
+        return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại trong giỏ hàng']);
     }
 }

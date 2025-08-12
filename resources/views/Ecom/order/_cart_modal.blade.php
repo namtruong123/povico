@@ -7,9 +7,9 @@
   <div class="tf-mini-cart-info">
     <p>{{ $item['name'] }}</p>
     <div class="wg-quantity">
-      <button type="button" class="btn-quantity btn-decrease" data-id="{{ $item['product_id'] }}">−</button>
-      <input type="text" data-id="{{ $item['product_id'] }}" class="quantity-product" value="{{ $item['quantity'] }}">
-      <button type="button" class="btn-quantity btn-increase" data-id="{{ $item['product_id'] }}">+</button>
+      <button type="button" class="btn-quantity1 btn-decrease1" data-id="{{ $item['product_id'] }}">−</button>
+      <input type="text" data-id="{{ $item['product_id'] }}" class="quantity-product1" value="{{ $item['quantity'] }}">
+      <button type="button" class="btn-quantity1 btn-increase1" data-id="{{ $item['product_id'] }}">+</button>
     </div>
     <button type="button" class="tf-btn-remove btn-remove-item" data-id="{{ $item['product_id'] }}">Xóa</button>
     <span>{{ number_format($item['price'],0,',','.') }}₫ x {{ $item['quantity'] }}</span>

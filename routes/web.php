@@ -48,10 +48,10 @@ Route::get('/san-pham/style/{style}', [\App\Http\Controllers\Ecom\ProductControl
 //cart
 use App\Http\Controllers\Ecom\CartController;
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add',    [CartController::class,'add'])->name('cart.add');
-Route::post('/cart/update', [CartController::class,'update'])->name('cart.update');
-Route::post('/cart/remove', [CartController::class,'remove'])->name('cart.remove');
-Route::get( '/cart/modal',  [CartController::class,'modal'])->name('cart.modal');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/modal', [CartController::class, 'modal'])->name('cart.modal');
 
 Route::get('/checkout', [\App\Http\Controllers\Ecom\OrderController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [\App\Http\Controllers\Ecom\OrderController::class, 'process'])->name('checkout.process');

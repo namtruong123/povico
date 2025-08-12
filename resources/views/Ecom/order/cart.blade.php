@@ -2,6 +2,7 @@
 @extends('Ecom.layout')
 @section('content')
 @include('Ecom.partials.header', ['cart' => $cart])
+
 <div class="space-1"></div>
 <div class="page-title relative">
     <div class="content">
@@ -22,8 +23,6 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-8">
-                <form method="POST" action="{{ route('cart.update') }}">
-                    @csrf
                     <table class="tf-table-page-cart">
                         <thead>
                             <tr>
@@ -35,50 +34,57 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($cart as $item)
-                            <tr class="tf-cart-item file-delete">
-                                <td class="tf-cart-item_product">
-                                    <a href="{{ route('product.detail', $item['slug']) }}" class="img-box">
-                                        <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="{{ route('product.detail', $item['slug']) }}" class="cart-title link">{{ $item['name'] }}</a>
-                                        @if(!empty($item['variant']))
-                                            <div class="variant text-caption-1">{{ $item['variant'] }}</div>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="tf-cart-item_price text-center">
-                                    <div class="cart-price text-button price-on-sale">{{ number_format($item['price'], 0, ',', '.') }}₫</div>
-                                </td>
-                                <td class="tf-cart-item_quantity">
-                                    <div class="wg-quantity mx-md-auto">
-                                        <button type="submit" name="decrease" value="{{ $item['product_id'] }}" class="btn-quantity btn-decrease">-</button>
-                                        <input type="text" class="quantity-product" name="quantities[{{ $item['product_id'] }}]" value="{{ $item['quantity'] }}">
-                                        <button type="submit" name="increase" value="{{ $item['product_id'] }}" class="btn-quantity btn-increase">+</button>
-                                    </div>
-                                </td>
-                                <td class="tf-cart-item_total text-center">
-                                    <div class="cart-total text-button total-price">{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫</div>
-                                </td>
-                                <td class="remove-cart">
-                                    <button type="submit" name="Xóa" value="{{ $item['product_id'] }}" class="remove icon icon-close"></button>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="text-center">Giỏ hàng trống</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
+    @forelse($cart as $item)
+    <tr class="tf-cart-item file-delete" data-product-id="{{ $item['product_id'] }}">
+        <td class="tf-cart-item_product">
+            <a href="{{ route('product.detail', $item['slug']) }}" class="img-box">
+                <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}">
+            </a>
+            <div class="cart-info">
+                <a href="{{ route('product.detail', $item['slug']) }}" class="cart-title link">{{ $item['name'] }}</a>
+                @if(!empty($item['variant']))
+                    <div class="variant text-caption-1">{{ $item['variant'] }}</div>
+                @endif
+            </div>
+        </td>
+        <td class="tf-cart-item_price text-center">
+            <div class="cart-price text-button price-on-sale">{{ number_format($item['price'], 0, ',', '.') }}₫</div>
+        </td>
+        <td class="tf-cart-item_quantity">
+            <div class="wg-quantity mx-md-auto">
+                <button type="button" class="btn-quantity btn-decrease" data-id="{{ $item['product_id'] }}">-</button>
+<input
+    type="number"
+    class="quantity-product"
+    value="{{ $item['quantity'] }}"
+    data-id="{{ $item['product_id'] }}"
+    min="1"
+/>
+<button type="button" class="btn-quantity btn-increase" data-id="{{ $item['product_id'] }}">+</button>
+            </div>
+        </td>
+        <td class="tf-cart-item_total text-center">
+            <div class="cart-total text-button total-price" id="total-price-{{ $item['product_id'] }}">
+                {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫
+            </div>
+        </td>
+        <td class="remove-cart">
+            <button type="button" class="remove icon icon-close" data-id="{{ $item['product_id'] }}"></button>
+        </td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="5" class="text-center">Giỏ hàng trống</td>
+    </tr>
+    @endforelse
+</tbody>
                     </table>
-                </form>
+                
                 <div class="ip-discount-code mt-3">
-                    <form method="POST" action="{{ route('cart.add') }}">
-                        @csrf
+                    
                         <input type="text" name="coupon" placeholder="Nhập mã giảm giá">
                         <button class="tf-btn btn-onsurface">Áp dụng mã</button>
-                    </form>
+                    
                 </div>
             </div>
             <div class="col-xl-4">
@@ -103,4 +109,8 @@
         </div>
     </div>
 </section>
+
+
+
+
 @endsection

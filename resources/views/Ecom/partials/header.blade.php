@@ -145,7 +145,7 @@
                         <li class="nav-cart">
                             <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">
                                 <span class="icon icon-cart"></span>
-                                <span class="count-box text-button-small">{{ count(session('cart', [])) }}</span>
+                                <span id="cart-count" class="count-box text-button-small">{{ collect(session('cart', []))->sum('quantity') }}</span>
                             </a>
                         </li>
                     </ul>
