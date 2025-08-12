@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use App\Models\Footer;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
         $view->with('cart', session('cart', []));
         });
+        View::composer('*', function ($view) {
+        $view->with('footer', Footer::first());
+    });
     }
 }

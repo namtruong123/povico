@@ -66,21 +66,20 @@
                                             alt="{{ $product->name }}">
                                     </a>
                                     <div class="list-product-btn">
-                                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
-                                                        <span class="icon icon-heart"></span>
-                                                        <span class="tooltip">Wishlist</span>
-                                                    </a>
-                                                    <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                                        class="box-icon compare ">
-                                                        <span class="icon icon-compare"></span>
-                                                        <span class="tooltip">Compare</span>
-                                                    </a>
-                                                    <a href="#quickView" data-bs-toggle="modal"
-                                                        class="box-icon quickview tf-btn-loading">
-                                                        <span class="icon icon-eye"></span>
-                                                        <span class="tooltip">Quick View</span>
-                                                    </a>
-                                                </div>
+                                        {{-- <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                            <span class="icon icon-heart"></span>
+                                            <span class="tooltip">Wishlist</span>
+                                        </a>
+                                        <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
+                                            class="box-icon compare ">
+                                            <span class="icon icon-compare"></span>
+                                            <span class="tooltip">Compare</span>
+                                        </a> --}}
+                                        <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading" data-id="{{ $product->id }}">
+                                            <span class="icon icon-eye"></span>
+                                            <span class="tooltip">Quick View</span>
+                                        </a>
+                                    </div>
                                     <div class="list-btn-main">
                                         <form method="POST" action="{{ route('cart.add') }}" style="display:inline;">
                                             @csrf
@@ -316,7 +315,7 @@
         </div>
     </section>
 
-    <!-- Testimonial -->
+    {{-- <!-- Testimonial -->
     <section class="flat-spacing-2 pt-0">
         <div class="container">
             <div class="row align-items-center">
@@ -425,7 +424,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Collection -->
     <section>
@@ -461,9 +460,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="heading-section">
-                        <h3 class="wow fadeInUp">News Insight</h3>
+                        <h3 class="wow fadeInUp">Tin tức</h3>
                         <p class="text-body-default text_secondary wow fadeInUp" data-wow-delay="0.1s">
-                            Browse our Top Trending: the hottest picks loved by all.
+                            Duyệt qua các xu hướng hàng đầu của chúng tôi: những lựa chọn nóng nhất được yêu thích bởi tất cả.
                         </p>
                     </div>
                 </div>
@@ -546,93 +545,6 @@
         </div>
     </section>
 
-    <!-- Shop Instagram -->
-    <section class="flat-spacing-2 pt-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="heading-section text-center">
-                        <h3>Shop Instagram</h3>
-                        <p class="text-body-default text_secondary">Elevate your wardrobe with fresh finds today!
-                        </p>
-                    </div>
-                    <div class="swiper tf-sw-shop-gallery" data-preview="5" data-tablet="3" data-mobile="2"
-                        data-space-lg="10" data-space-md="10" data-space="8" data-pagination="2" data-pagination-md="3"
-                        data-pagination-lg="1">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="gallery-item hover-overlay hover-img wow fadeInUp" data-wow-delay="0s">
-                                    <div class="img-style">
-                                        <img class="lazyload img-hover"
-                                            data-src="{{ asset('assets/frontend/images/gallery/gallery-1.jpg') }}"
-                                            src="{{ asset('assets/frontend/images/gallery/gallery-1.jpg') }}"
-                                            alt="image-gallery">
-                                    </div>
-                                    <a href="product-detail.html" class="box-icon hover-tooltip"><span
-                                            class="icon icon-eye"></span> <span class="tooltip">View
-                                            Product</span></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="gallery-item hover-overlay hover-img wow fadeInUp" data-wow-delay=".1s">
-                                    <div class="img-style">
-                                        <img class="lazyload img-hover"
-                                            data-src="{{ asset('assets/frontend/images/gallery/gallery-2.jpg') }}"
-                                            src="{{ asset('assets/frontend/images/gallery/gallery-2.jpg') }}"
-                                            alt="image-gallery">
-                                    </div>
-                                    <a href="product-detail.html" class="box-icon hover-tooltip"><span
-                                            class="icon icon-eye"></span> <span class="tooltip">View
-                                            Product</span></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="gallery-item hover-overlay hover-img wow fadeInUp" data-wow-delay=".2s">
-                                    <div class="img-style">
-                                        <img class="lazyload img-hover"
-                                            data-src="{{ asset('assets/frontend/images/gallery/gallery-3.jpg') }}"
-                                            src="{{ asset('assets/frontend/images/gallery/gallery-3.jpg') }}"
-                                            alt="image-gallery">
-                                    </div>
-                                    <a href="product-detail.html" class="box-icon hover-tooltip"><span
-                                            class="icon icon-eye"></span> <span class="tooltip">View
-                                            Product</span></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="gallery-item hover-overlay hover-img wow fadeInUp" data-wow-delay=".3s">
-                                    <div class="img-style">
-                                        <img class="lazyload img-hover"
-                                            data-src="{{ asset('assets/frontend/images/gallery/gallery-4.jpg') }}"
-                                            src="{{ asset('assets/frontend/images/gallery/gallery-4.jpg') }}"
-                                            alt="image-gallery">
-                                    </div>
-                                    <a href="product-detail.html" class="box-icon hover-tooltip"><span
-                                            class="icon icon-eye"></span> <span class="tooltip">View
-                                            Product</span></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="gallery-item hover-overlay hover-img wow fadeInUp" data-wow-delay=".4s">
-                                    <div class="img-style">
-                                        <img class="lazyload img-hover"
-                                            data-src="{{ asset('assets/frontend/images/gallery/gallery-5.jpg') }}"
-                                            src="{{ asset('assets/frontend/images/gallery/gallery-5.jpg') }}"
-                                            alt="image-gallery">
-                                    </div>
-                                    <a href="product-detail.html" class="box-icon hover-tooltip"><span
-                                            class="icon icon-eye"></span> <span class="tooltip">View
-                                            Product</span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sw-pagination-gallery sw-dots type-circle justify-content-center"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Benefit -->
     <section class="flat-spacing-2 pt-0">
         <div class="container">
@@ -695,150 +607,7 @@
     </section>
 
     <!-- Footer -->
-    <footer id="footer" class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="footer-body">
-                        <div class="footer-left">
-                            <div class="footer-infor flex-grow-1">
-                                <div class="footer-menu">
-                                    <div class="footer-col-block">
-                                        <h5 class="footer-heading text_white footer-heading-mobile">
-                                            {{ $footer->info_title ?? 'Infomation' }}
-                                        </h5>
-                                        <div class="tf-collapse-content">
-                                            <ul class="footer-menu-list">
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->about_link ?? '#' }}" class="link footer-menu_item">{{ $footer->about_text ?? 'About Us' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->stories_link ?? '#' }}" class="link footer-menu_item">{{ $footer->stories_text ?? 'Our Stories' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->size_guide_link ?? '#' }}" class="link footer-menu_item">{{ $footer->size_guide_text ?? 'Size Guide' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->contact_link ?? '#' }}" class="link footer-menu_item">{{ $footer->contact_text ?? 'Contact us' }}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="footer-col-block">
-                                        <h5 class="footer-heading text_white footer-heading-mobile">
-                                            {{ $footer->customer_service_title ?? 'Customer Services' }}
-                                        </h5>
-                                        <div class="tf-collapse-content">
-                                            <ul class="footer-menu-list">
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->shipping_link ?? '#' }}" class="link footer-menu_item">{{ $footer->shipping_text ?? 'Shipping' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->return_link ?? '#' }}" class="link footer-menu_item">{{ $footer->return_text ?? 'Return & Refund' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->privacy_link ?? '#' }}" class="link footer-menu_item">{{ $footer->privacy_text ?? 'Privacy Policy' }}</a>
-                                                </li>
-                                                <li class="text-body-default">
-                                                    <a href="{{ $footer->terms_link ?? '#' }}" class="link footer-menu_item">{{ $footer->terms_text ?? 'Terms & Conditions' }}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="footer-phone-number">
-                                    <h4 class="text_white number">{{ $footer->hotline ?? '' }}</h4>
-                                    <h4 class="text_white mail">{{ $footer->email ?? '' }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer-col-block footer-newsletter">
-                            <h3 class="footer-heading footer-heading-mobile text_white">
-                                {{ $footer->newsletter_title ?? 'Stay in the loop with Weekly newsletters' }}
-                            </h3>
-                            <div class="tf-collapse-content">
-                                <form id="subscribe-form" action="#" class="form-newsletter subscribe-form"
-                                    method="post" accept-charset="utf-8" data-mailchimp="true">
-                                    <div id="subscribe-content" class="subscribe-content">
-                                        <fieldset class="email">
-                                            <input id="subscribe-email" type="email" name="email-form"
-                                                class="subscribe-email" placeholder="{{ $footer->newsletter_placeholder ?? 'Enter your e-mail' }}"
-                                                tabindex="0" aria-required="true">
-                                        </fieldset>
-                                        <div class="button-submit">
-                                            <button id="subscribe-button" class="subscribe-button text-body-default "
-                                                type="button">{{ $footer->newsletter_button ?? 'Subscribe' }}<i class="icon-arrow-up-right"></i></button>
-                                        </div>
-                                    </div>
-                                    <div id="subscribe-msg" class="subscribe-msg"></div>
-                                </form>
-                                <ul class="tf-social-icon type-2">
-                                    @if($footer && $footer->facebook)
-                                        <li><a href="{{ $footer->facebook }}" class="social-facebook" target="_blank"><i class="icon icon-facebook"></i></a></li>
-                                    @endif
-                                    @if($footer && $footer->zalo)
-                                        <li><a href="{{ $footer->zalo }}" class="social-zalo" target="_blank"><img src="{{ asset('assets/frontend/images/social/zalo.svg') }}" alt="Zalo" style="width:22px"></a></li>
-                                    @endif
-                                    @if($footer && $footer->tiktok)
-                                        <li><a href="{{ $footer->tiktok }}" class="social-tiktok" target="_blank"><i class="icon icon-tiktok"></i></a></li>
-                                    @endif
-                                    @if($footer && $footer->youtube)
-                                        <li><a href="{{ $footer->youtube }}" class="social-youtube" target="_blank"><i class="icon icon-youtube"></i></a></li>
-                                    @endif
-                                    @if($footer && $footer->instagram)
-                                        <li><a href="{{ $footer->instagram }}" class="social-instagram" target="_blank"><i class="icon icon-instagram"></i></a></li>
-                                    @endif
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="footer-bottom-wrap">
-                                <div class="left">
-                                    <p class="text-body-default text_white">{{ $footer->copyright ?? 'Copyright ©2025 Povico. All Rights Reserved.' }}</p>
-                                </div>
-                                <div class="center">
-                                    <div class="tf-currencies">
-                                        <select class="image-select center style-default style-box  type-currencies">
-                                            <option selected data-thumbnail="images/country/us.svg">English (USD)</option>
-                                            <option data-thumbnail="images/country/vn.svg">Vietnam (VND)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="tf-payment">
-                                    <ul>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-1.png') }}" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-2.png') }}" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-3.png') }}" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-4.png') }}" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-5.png') }}" alt="">
-                                        </li>
-                                        <li>
-                                            <img src="{{ asset('assets/frontend/images/payment/payment-6.png') }}" alt="">
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+  
 
     <!-- Toolbar Bottom -->
     <div class="tf-toolbar-bottom">
@@ -1245,164 +1014,10 @@
     <div class="modal fullRight fade modal-quick-view" id="quickView">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="tf-quick-view-image">
-                    <div class="wrap-quick-view wrapper-scroll-quickview">
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="beige">
-                            <img class="lazyload" data-src="images/shop/quickview-slidebar-1.jpg"
-                                src="images/shop/quickview-slidebar-1.jpg" alt="">
-                        </div>
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="gray">
-                            <img class="lazyload" data-src="images/shop/quickview-slidebar-2.jpg"
-                                src="images/shop/quickview-slidebar-2.jpg" alt="">
-                        </div>
-                        <div class="quickView-item item-scroll-quickview" data-scroll-quickview="grey">
-                            <img class="lazyload" data-src="images/shop/quickview-slidebar-3.jpg"
-                                src="images/shop/quickview-slidebar-3.jpg" alt="">
-                        </div>
-                        <div class="quickView-item item-scroll-quickview">
-                            <img class="lazyload" data-src="images/shop/quickview-slidebar-4.jpg"
-                                src="images/shop/quickview-slidebar-4.jpg" alt="">
-                        </div>
-                        <div class="quickView-item item-scroll-quickview">
-                            <img class="lazyload" data-src="images/shop/quickview-slidebar-5.jpg"
-                                src="images/shop/quickview-slidebar-5.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="wrap">
-                    <div class="header">
-                        <h5 class="title">Quick View</h5>
-                        <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-                    </div>
-                    <div class="tf-product-info-list">
-                        <div class="tf-product-info-heading">
-                            <div class="tf-product-info-name">
-                                <h3 class="name">Ergonomic Chair Pro</h3>
-                                <div class="sub">
-                                    <div class="tf-product-info-rate">
-                                        <div class="list-star-default">
-                                            <i class="icon icon-star"></i>
-                                            <i class="icon icon-star"></i>
-                                            <i class="icon icon-star"></i>
-                                            <i class="icon icon-star"></i>
-                                            <i class="icon icon-star"></i>
-                                        </div>
-                                        <div class="text text-caption-1">(134 reviews)</div>
-                                    </div>
-                                    <div class="tf-product-info-sold">
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M16.7076 9.80077L7.95759 19.1758C7.86487 19.2747 7.74247 19.3408 7.60888 19.3641C7.47528 19.3874 7.33773 19.3666 7.21699 19.3049C7.09625 19.2432 6.99886 19.1438 6.93953 19.0219C6.88019 18.8999 6.86213 18.762 6.88806 18.6289L8.03338 12.9L3.53103 11.2094C3.43434 11.1732 3.34811 11.1136 3.28005 11.036C3.21199 10.9584 3.16422 10.8651 3.14101 10.7645C3.11779 10.6639 3.11986 10.5591 3.14702 10.4595C3.17418 10.3599 3.22559 10.2686 3.29666 10.1937L12.0467 0.818744C12.1394 0.719788 12.2618 0.653675 12.3954 0.630383C12.529 0.60709 12.6665 0.627882 12.7873 0.68962C12.908 0.751359 13.0054 0.850694 13.0647 0.972636C13.1241 1.09458 13.1421 1.23251 13.1162 1.36562L11.9677 7.10077L16.4701 8.78906C16.5661 8.82547 16.6516 8.88496 16.7191 8.96228C16.7867 9.0396 16.8341 9.13236 16.8573 9.23237C16.8805 9.33237 16.8786 9.43655 16.852 9.53569C16.8253 9.63482 16.7747 9.72587 16.7045 9.80077H16.7076Z"
-                                                fill="#DC9056" />
-                                        </svg>
-
-                                        <div class="text text-caption-1">18 sold in last 32 hours</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tf-product-info-desc">
-                                <div class="tf-product-info-price">
-                                    <h5 class="price-on-sale">$79.99</h5>
-                                    <div class="compare-at-price">$98.99</div>
-                                    <div class="badges-on-sale text-btn-uppercase">-25%
-                                    </div>
-                                </div>
-                                <p>The garments labelled as Committed are products that have been produced using
-                                    sustainable fibres or processes, reducing their environmental impact.</p>
-                                <div class="tf-product-info-liveview">
-                                    <i class="icon icon-eye"></i>
-                                    <p class="text-caption-1">
-                                        <span class="liveview-count">28</span>
-                                        people are viewing this right now
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-choose-option">
-                            <div class="variant-picker-item">
-                                <div class="variant-picker-label mb_12">
-                                    Colors:<span class="text-title variant-picker-label-value">Beige</span>
-                                </div>
-                                <div class="variant-picker-values">
-                                    <input id="values-beige1" type="radio" name="color2" checked>
-                                    <label
-                                        class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview active"
-                                        data-slide="0" data-price="79.99" for="values-beige1" data-value="Beige"
-                                        data-scroll-quickview="beige">
-                                        <span class="btn-checkbox bg-color-beige1"></span>
-                                        <span class="tooltip">Beige</span>
-                                    </label>
-                                    <input id="values-gray1" type="radio" name="color2">
-                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview"
-                                        data-slide="1" data-price="79.99" for="values-gray1" data-value="Gray"
-                                        data-scroll-quickview="gray">
-                                        <span class="btn-checkbox bg-color-gray"></span>
-                                        <span class="tooltip">Gray</span>
-                                    </label>
-                                    <input id="values-grey1" type="radio" name="color2">
-                                    <label class="hover-tooltip tooltip-bot radius-60 color-btn btn-scroll-quickview"
-                                        data-slide="2" data-price="89.99" for="values-grey1" data-value="Grey"
-                                        data-scroll-quickview="grey">
-                                        <span class="btn-checkbox bg-color-grey"></span>
-                                        <span class="tooltip">Grey</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="variant-picker-item">
-                                <div class="d-flex justify-content-between mb_12">
-                                    <div class="variant-picker-label">
-                                        Size:<span class="text-title variant-picker-label-value">Size c -
-                                            Large</span>
-                                    </div>
-                                    <a class="size-guide text-title link show-size-guide">Size Guide</a>
-                                </div>
-                                <div class="variant-picker-values gap12">
-                                    <input type="radio" name="size2" id="values-s1">
-                                    <label class="style-text size-btn" for="values-s1" data-value="Size A - Small">
-                                        <span class="text-title">Size A - Small</span>
-                                    </label>
-                                    <input type="radio" name="size2" id="values-m1">
-                                    <label class="style-text size-btn" for="values-m1" data-price="89.99"
-                                        data-value="Size B - Medium">
-                                        <span class="text-title">Size B - Medium</span>
-                                    </label>
-
-                                </div>
-                            </div>
-                            <div class="tf-product-info-quantity">
-                                <div class="title mb_12">Quantity:</div>
-                                <div class="wg-quantity">
-                                    <span class="btn-quantity btn-decrease">-</span>
-                                    <input class="quantity-product" type="text" name="number" value="1">
-                                    <span class="btn-quantity btn-increase">+</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tf-product-info-by-btn mb_10">
-                                    <a class="tf-btn btn-onsurface flex-grow-1   show-shopping-cart">
-                                        <span>Add to cart -&nbsp;</span>
-                                        <span class="tf-qty-price total-price">$79.99</span>
-                                    </a>
-                                    <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                        class="box-icon hover-tooltip compare  show-compare">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip text-caption-2">Compare</span>
-                                    </a>
-                                    <a href="javascript:void(0);"
-                                        class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action">
-                                        <span class="icon icon-heart"></span>
-                                        <span class="tooltip text-caption-2">Wishlist</span>
-                                    </a>
-                                </div>
-                                <a href="#" class="tf-btn btn-primary w-full">Buy it now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{-- Nội dung sẽ được load bằng AJAX --}}
             </div>
         </div>
-    </div><!-- /.quickView -->
+    </div>
 
     <!-- size-guide -->
     <div class="modal fade modal-size-guide" id="size-guide">
@@ -1689,4 +1304,17 @@ $(function(){
     }
 </script>
 
+
+ <!-- .quickView -->
+ <script>
+$(document).on('click', '.quickview', function(e){
+    e.preventDefault();
+    let id = $(this).data('id');
+    $('#quickView .modal-content').html('<div class="p-5 text-center">Đang tải...</div>');
+    $('#quickView').modal('show');
+    $.get('{{ url("/quickview") }}/'+id, function(res){
+        $('#quickView .modal-content').html(res.html);
+    });
+});
+</script>
 @endpush

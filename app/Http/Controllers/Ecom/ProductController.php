@@ -138,4 +138,11 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
+    public function quickview($id)
+    {
+        $product = Product::with('attribute', 'category', 'galleries')->findOrFail($id);
+        return response()->json([
+            'html' => view('Ecom.partials.quickview', compact('product'))->render()
+        ]);
+    }
 }

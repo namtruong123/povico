@@ -75,3 +75,8 @@ Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\Ecom\PostController::class,
     ->name('posts.show');
 Route::get('/search-products', [\App\Http\Controllers\Ecom\ProductController::class, 'search'])->name('products.search');
 Route::get('/autocomplete-products', [\App\Http\Controllers\Ecom\ProductController::class, 'autocomplete'])->name('products.autocomplete');
+
+
+use App\Http\Controllers\Ecom\ProductController;
+
+Route::get('/quickview/{id}', [ProductController::class, 'quickview'])->name('product.quickview');
