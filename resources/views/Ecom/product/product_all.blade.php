@@ -5,14 +5,13 @@
 <div class="space-1"></div>
 <div class="space-1"></div>
 <div class="page-title relative">
-<div class="paralaximg" data-parallax="scroll" data-image-src="{{ asset('assets/frontend/images/page-title/page-title-1.jpg') }}">    </div>
+    <div class="paralaximg" data-parallax="scroll" data-image-src="{{ asset('assets/frontend/images/page-title/page-title-1.jpg') }}"></div>
     <div class="content">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <h3 class="title">Tất cả sản phẩm</h3>
                     <ul class="breadcrumb">
-                        {{-- <li><a href="{{ route('home') }}">Trang chủ</a></li> --}}
                         <li>Sản phẩm</li>
                     </ul>
                 </div>
@@ -87,39 +86,86 @@
             </ul>
             <div class="tf-control-sorting">
                 <p class="d-none d-lg-block text-caption-1">Sắp xếp theo:</p>
-                <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
-                    <div class="btn-select">
-                        <span class="text-sort-value">Bán chạy nhất</span>
-                        <span class="icon icon-down"></span>
+                <form id="sortForm" method="GET" action="{{ route('products.filter') }}">
+                    <input type="hidden" name="category" value="{{ request('category') }}">
+                    <input type="hidden" name="color" value="{{ is_array(request('color')) ? implode(',', request('color')) : request('color') }}">
+                    <input type="hidden" name="price_min" value="{{ request('price_min') }}">
+                    <input type="hidden" name="price_max" value="{{ request('price_max') }}">
+                    <input type="hidden" name="is_new" value="{{ request('is_new') }}">
+                    <input type="hidden" name="is_best_seller" value="{{ request('is_best_seller') }}">
+                    <input type="hidden" name="availability" value="{{ request('availability') }}">
+                    <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
+                        <div class="btn-select">
+                            <span class="text-sort-value">
+                                @php
+                                    $sort = request('sort', 'best-selling');
+                                    $sortText = [
+                                        'all' => 'Tất cả sản phẩm',
+                                        'best-selling' => 'Bán chạy nhất',
+                                        'a-z' => 'Tên A-Z',
+                                        'z-a' => 'Tên Z-A',
+                                        'price-low-high' => 'Giá tăng dần',
+                                        'price-high-low' => 'Giá giảm dần'
+                                    ];
+                                @endphp
+                                {{ $sortText[$sort] ?? 'Tất cả sản phẩm' }}
+                            </span>
+                            <span class="icon icon-down"></span>
+                        </div>
+                        <div class="dropdown-menu">
+                            @foreach($sortText as $key => $text)
+                                <div class="select-item" data-sort-value="{{ $key }}">
+                                    <span class="text-value-item">{{ $text }}</span>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="dropdown-menu">
-                        <div class="select-item" data-sort-value="best-selling">
-                            <span class="text-value-item">Bán chạy nhất</span>
-                        </div>
-                        <div class="select-item" data-sort-value="a-z">
-                            <span class="text-value-item">Tên A-Z</span>
-                        </div>
-                        <div class="select-item" data-sort-value="z-a">
-                            <span class="text-value-item">Tên Z-A</span>
-                        </div>
-                        <div class="select-item" data-sort-value="price-low-high">
-                            <span class="text-value-item">Giá tăng dần</span>
-                        </div>
-                        <div class="select-item" data-sort-value="price-high-low">
-                            <span class="text-value-item">Giá giảm dần</span>
-                        </div>
-                    </div>
-                </div>
+                    <input type="hidden" name="sort" id="sortInput" value="{{ $sort }}">
+                </form>
             </div>
         </div>
         <div class="wrapper-control-shop">
             <div class="meta-filter-shop">
-                <div id="product-count-grid" class="count-text"></div>
-                <div id="product-count-list" class="count-text"></div>
-                <div id="applied-filters"></div>
-                <button id="remove-all" class="remove-all-filters text-btn-uppercase" style="display: none;">
-                    XÓA TẤT CẢ <i class="icon icon-close"></i>
-                </button>
+                <div id="product-count-grid" class="count-text">
+                    Hiển thị {{ $products->count() }} / {{ $products->total() }} sản phẩm
+                </div>
+                <div id="applied-filters">
+                    @if(request()->hasAny(['category','color','price_min','price_max','is_new','is_best_seller','availability']))
+                        <span>Đã chọn:</span>
+                        @if(request('category'))
+                            <span class="badge bg-secondary">Danh mục: {{ optional($categories->where('id',request('category'))->first())->name }}</span>
+                        @endif
+                        @if(request('color'))
+                            @php
+                                $colorNames = [];
+                                if(is_array(request('color'))) {
+                                    foreach($colors->whereIn('id',request('color')) as $c) $colorNames[] = $c->name;
+                                } else {
+                                    $c = $colors->where('id',request('color'))->first();
+                                    if($c) $colorNames[] = $c->name;
+                                }
+                            @endphp
+                            <span class="badge bg-secondary">Màu: {{ implode(', ', $colorNames) }}</span>
+                        @endif
+                        @if(request('price_min') || request('price_max'))
+                            <span class="badge bg-secondary">Giá: {{ number_format(request('price_min',0)) }}₫ - {{ number_format(request('price_max',50000000)) }}₫</span>
+                        @endif
+                        @if(request('is_new'))
+                            <span class="badge bg-secondary">Hàng mới</span>
+                        @endif
+                        @if(request('is_best_seller'))
+                            <span class="badge bg-secondary">Bán chạy</span>
+                        @endif
+                        @if(request('availability'))
+                            <span class="badge bg-secondary">
+                                {{ request('availability') == 'inStock' ? 'Còn hàng' : 'Hết hàng' }}
+                            </span>
+                        @endif
+                        <a href="{{ route('product.all') }}" class="remove-all-filters text-btn-uppercase ms-2">
+                            XÓA TẤT CẢ <i class="icon icon-close"></i>
+                        </a>
+                    @endif
+                </div>
             </div>
             <div class="row">
                 <div class="col-xl-3">
@@ -129,10 +175,11 @@
                                 <h5><span class="icon icon-filter"></span>Bộ lọc</h5>
                                 <span class="icon-close close-filter"></span>
                             </div>
-                            <div class="canvas-body">
-                                {{-- Thêm các bộ lọc động ở đây nếu cần --}}
-                                @include('Ecom.product.sidebar_filter')
-                            </div>
+                            {{-- Sidebar filter --}}
+                            @include('Ecom.product.sidebar_filter', [
+                                'categories' => $categories,
+                                'colors' => $colors
+                            ])
                             <div class="canvas-bottom d-block d-xl-none">
                                 <button id="reset-filter" class="tf-btn btn-border btn-reset">Xóa tất cả bộ lọc</button>
                             </div>
@@ -141,7 +188,7 @@
                 </div>
                 <div class="col-xl-9">
                     <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout">
-                        @foreach($products as $product)
+                        @forelse($products as $product)
                         <div class="card-product style-1 grid">
                             <div class="card-product-wrapper">
                                 <a href="{{ route('product.detail', $product->slug) }}" class="image-wrap">
@@ -151,7 +198,7 @@
                                     @endif
                                 </a>
                                 @if($product->discount_price)
-                                <div class="on-sale-wrap"><span class="on-sale-item>
+                                <div class="on-sale-wrap"><span class="on-sale-item">
                                     -{{ round(100 - ($product->discount_price/$product->price)*100) }}%
                                 </span></div>
                                 @endif
@@ -197,10 +244,14 @@
                                 </ul>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="col-12">
+                            <div class="alert alert-warning mt-4">Không tìm thấy sản phẩm phù hợp.</div>
+                        </div>
+                        @endforelse
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        {{ $products->links() }}
+                        {{ $products->withQueryString()->links() }}
                     </div>
                 </div>
             </div>
@@ -208,27 +259,85 @@
     </div>
 </section>
 @endsection
+
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/distribute/nouislider.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/distribute/nouislider.min.css" />
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Layout switch
     const layoutSwitchers = document.querySelectorAll('.tf-view-layout-switch');
     const gridLayout = document.getElementById('gridLayout');
-
     layoutSwitchers.forEach(function(item) {
         item.addEventListener('click', function() {
-            // Xóa active ở tất cả nút
             layoutSwitchers.forEach(i => i.classList.remove('active'));
-            // Thêm active cho nút được chọn
             item.classList.add('active');
-
-            // Lấy giá trị layout
             const layout = item.getAttribute('data-value-layout');
-            // Xóa tất cả class layout cũ
             gridLayout.classList.remove('list', 'tf-col-2', 'tf-col-3', 'tf-col-4');
-            // Thêm class mới
             gridLayout.classList.add(layout);
         });
     });
+
+    // Sort dropdown
+    document.querySelectorAll('.select-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            document.getElementById('sortInput').value = item.getAttribute('data-sort-value');
+            document.getElementById('sortForm').submit();
+        });
+    });
+
+    // Reset filter
+    const resetBtn = document.getElementById('reset-filter');
+    if(resetBtn) {
+        resetBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = "{{ route('product.all') }}";
+        });
+    }
+
+    // Price slider (nếu dùng noUiSlider)
+    var priceSlider = document.getElementById('price-value-range');
+    var minValue = document.getElementById('price-min-value');
+    var maxValue = document.getElementById('price-max-value');
+    if (priceSlider && window.noUiSlider) {
+        noUiSlider.create(priceSlider, {
+            start: [{{ request('price_min', 0) }}, {{ request('price_max', 500) }}],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 500
+            }
+        });
+        priceSlider.noUiSlider.on('update', function(values, handle) {
+            if (minValue && maxValue) {
+                minValue.textContent = Math.round(values[0]);
+                maxValue.textContent = Math.round(values[1]);
+            }
+        });
+        priceSlider.noUiSlider.on('change', function(values) {
+            // Gửi form filter khi thay đổi giá
+            let form = priceSlider.closest('form');
+            if(form) {
+                let minInput = form.querySelector('input[name="price_min"]');
+                let maxInput = form.querySelector('input[name="price_max"]');
+                if(!minInput) {
+                    minInput = document.createElement('input');
+                    minInput.type = 'hidden';
+                    minInput.name = 'price_min';
+                    form.appendChild(minInput);
+                }
+                if(!maxInput) {
+                    maxInput = document.createElement('input');
+                    maxInput.type = 'hidden';
+                    maxInput.name = 'price_max';
+                    form.appendChild(maxInput);
+                }
+                minInput.value = Math.round(values[0]);
+                maxInput.value = Math.round(values[1]);
+                form.submit();
+            }
+        });
+    }
 });
 </script>
 @endpush

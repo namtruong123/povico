@@ -50,14 +50,11 @@ class CartController extends Controller
                 'variant'    => $request->input('variant', ''),
             ];
         }
-
-        Session::put('cart', $cart);
-
+        session(['cart' => $cart]);
         if ($request->ajax()) {
             return response()->json(['success' => true, 'cart' => $cart]);
-        } else {
-            return view('Ecom.partials.shopping_cart_modal', compact('cart'))->with('success', 'Đã thêm vào giỏ hàng');
         }
+        return redirect()->route('cart.index')->with('success', 'Đã thêm vào giỏ hàng');
     }
 
     // Cập nhật số lượng
