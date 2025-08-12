@@ -60,40 +60,46 @@ $(function() {
 
     // Cập nhật số lượng trong modal mini cart
     function updateMiniCart(cart) {
-        // Xóa toàn bộ danh sách cũ
-        const $miniCart = $('.tf-mini-cart-items');
-        $miniCart.empty();
+    // Xóa toàn bộ danh sách cũ
+    const $miniCart = $('.tf-mini-cart-items');
+    $miniCart.empty();
 
-        if (Object.keys(cart).length === 0) {
-            $miniCart.html('<div class="text-center py-4">Giỏ hàng trống.</div>');
-            return;
-        }
-
-        // Sinh HTML mới theo cart data
-        for (const [productId, item] of Object.entries(cart)) {
-            const priceText = formatCurrency(item.price);
-            const quantity = item.quantity;
-
-            const itemHtml = `
-                <div class="tf-mini-cart-item">
-                  <div class="tf-mini-cart-image">
-                    <img src="${item.image ? item.image : ''}" width="40" alt="${item.name}">
-                  </div>
-                  <div class="tf-mini-cart-info">
-                    <p>${item.name}</p>
-                    <div class="wg-quantity">
-                      <button type="button" class="btn-quantity1 btn-decrease1" data-id="${productId}">−</button>
-                      <input type="text" data-id="${productId}" class="quantity-product1" value="${quantity}">
-                      <button type="button" class="btn-quantity1 btn-increase1" data-id="${productId}">+</button>
-                    </div>
-                    <button type="button" class="tf-btn-remove btn-remove-item" data-id="${productId}">Xóa</button>
-                    <span>${priceText} x ${quantity}</span>
-                  </div>
-                </div>
-            `;
-            $miniCart.append(itemHtml);
-        }
+    if (Object.keys(cart).length === 0) {
+        $miniCart.html('<div class="text-center py-4">Giỏ hàng trống.</div>');
+        // Cập nhật tổng tiền về 0 luôn
+        $('.tf-totals-total-value').text(formatCurrency(0));
+        return;
     }
+
+    // Sinh HTML mới theo cart data
+    for (const [productId, item] of Object.entries(cart)) {
+        const priceText = formatCurrency(item.price);
+        const quantity = item.quantity;
+
+        const itemHtml = `
+            <div class="tf-mini-cart-item">
+              <div class="tf-mini-cart-image">
+                <img src="${item.image ? item.image : ''}" width="40" alt="${item.name}">
+              </div>
+              <div class="tf-mini-cart-info">
+                <p>${item.name}</p>
+                <div class="wg-quantity">
+                  <button type="button" class="btn-quantity1 btn-decrease1" data-id="${productId}">−</button>
+                  <input type="text" data-id="${productId}" class="quantity-product1" value="${quantity}">
+                  <button type="button" class="btn-quantity1 btn-increase1" data-id="${productId}">+</button>
+                </div>
+                <button type="button" class="tf-btn-remove btn-remove-item" data-id="${productId}">Xóa</button>
+                <span>${priceText} x ${quantity}</span>
+              </div>
+            </div>
+        `;
+        $miniCart.append(itemHtml);
+    }
+
+    // **Cập nhật tổng tiền modal**
+    const total = Object.values(cart).reduce((sum, i) => sum + i.price * i.quantity, 0);
+    $('.tf-totals-total-value').text(formatCurrency(total));
+}
 
     // Hàm gửi cập nhật số lượng
     function updateCartQty(productId, quantity) {
