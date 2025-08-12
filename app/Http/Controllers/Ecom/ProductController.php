@@ -13,10 +13,21 @@ class ProductController extends Controller
         $product = \App\Models\Product::with('attribute')->where('slug', $slug)->firstOrFail();
         return view('Ecom.product.product_detail', compact('product'));
     }
-    public function all()
+    public function all(Request $request)
     {
-        $products = \App\Models\Product::with('attribute', 'category', 'galleries')->paginate(12);
-        return view('Ecom.product.product_all', compact('products'));
+        $query = \App\Models\Product::with('attribute', 'category', 'galleries');
+
+        // Nếu có category trên URL thì lọc
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $products = $query->paginate(12);
+
+        $categories = \App\Models\Category::withCount('products')->get();
+        $colors = \App\Models\ProductAttribute::where('group_id', 1)->get(); // group_id=1 là màu sắc
+
+        return view('Ecom.product.product_all', compact('products', 'categories', 'colors'));
     }
     public function filter(Request $request)
     {
@@ -27,22 +38,17 @@ class ProductController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        // Filter theo chất liệu
-        if ($request->filled('material')) {
-            $query->whereIn('attribute_id', (array)$request->material);
-        }
-
         // Filter theo màu sắc
         if ($request->filled('color')) {
             $query->whereIn('attribute_id', (array)$request->color);
         }
 
         // Filter theo giá
-        if ($request->filled('min_price')) {
-            $query->where('price', '>=', $request->min_price);
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
         }
-        if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
         }
 
         // Filter theo trạng thái
@@ -60,13 +66,36 @@ class ProductController extends Controller
             }
         }
 
+        // Xử lý sắp xếp
+        $sort = $request->input('sort', 'all');
+        switch ($sort) {
+            case 'best-selling':
+                $query->orderByDesc('sold'); // hoặc trường bán chạy của bạn
+                break;
+            case 'a-z':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'z-a':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'price-low-high':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price-high-low':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'all':
+            default:
+                $query->orderBy('created_at', 'desc'); // hoặc để nguyên không orderBy nếu muốn mặc định
+                break;
+        }
+
         $products = $query->with('attribute', 'category', 'galleries')->paginate(12);
 
-        $categories = \App\Models\Category::all();
-        $materials = \App\Models\ProductAttribute::where('group_id', 1)->get();
-        $colors = \App\Models\ProductAttribute::where('group_id', 2)->get();
+        $categories = \App\Models\Category::withCount('products')->get();
+        $colors = \App\Models\ProductAttribute::where('group_id', 1)->get();
 
-        return view('Ecom.product.product_all', compact('products', 'categories', 'materials', 'colors'));
+        return view('Ecom.product.product_all', compact('products', 'categories', 'colors'));
     }
     public function pagination()
     {
