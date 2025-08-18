@@ -203,14 +203,14 @@
                                 </span></div>
                                 @endif
                                 <div class="list-product-btn">
-                                    <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
+                                    {{-- <a href="javascript:void(0);" class="box-icon wishlist btn-icon-action">
                                         <span class="icon icon-heart"></span>
                                         <span class="tooltip">Yêu thích</span>
                                     </a>
                                     <a href="#compare" data-bs-toggle="modal" aria-controls="compare" class="box-icon compare ">
                                         <span class="icon icon-compare"></span>
                                         <span class="tooltip">So sánh</span>
-                                    </a>
+                                    </a> --}}
                                     <a href="#quickView" data-bs-toggle="modal" class="box-icon quickview tf-btn-loading">
                                         <span class="icon icon-eye"></span>
                                         <span class="tooltip">Xem nhanh</span>
@@ -228,7 +228,9 @@
                             <div class="card-product-info ">
                                 <a href="{{ route('product.detail', $product->slug) }}" class="title link">{{ $product->name }}</a>
                                 <div class="price text-body-default ">
-                                    @if($product->discount_price)
+                                    @if(($product->discount_price ?? $product->price) == 0)
+                                        <span class="current-price">Liên hệ</span>
+                                    @elseif($product->discount_price)
                                         <span class="text-caption-1 old-price">{{ number_format($product->price) }}₫</span>
                                         <span class="current-price">{{ number_format($product->discount_price) }}₫</span>
                                     @else

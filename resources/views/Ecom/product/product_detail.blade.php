@@ -81,36 +81,28 @@
                                     <p>{!! $product->short_desc ?? $product->description !!}</p>
                                 </div>
                             </div>
-                            <form id="add-to-cart-form">
+                            <form method="POST" action="{{ route('cart.add') }}" id="add-to-cart-form">
+                                @csrf
                                 <div class="tf-product-info-choose-option gap-19">
                                     <div class="tf-product-info-quantity">
                                         <div class="title mb_12">Số lượng:</div>
                                         <div class="wg-quantity">
                                             <span class="btn-quantity btn-decrease">-</span>
-                                            <input class="quantity-product" type="text" name="quantity" value="1" min="1">
+                                            <input class="quantity-product" type="number" name="quantity" value="1" min="1">
                                             <span class="btn-quantity btn-increase">+</span>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="tf-product-info-by-btn mb_12">
-                                            {{-- <a href="javascript:void(0);" class="tf-btn btn-onsurface flex-grow-1 add-to-cart-btn"
-                                               data-product-id="{{ $product->id }}" data-quantity="1">
-                                                <span>Thêm vào giỏ - </span>
-                                                <span class="tf-qty-price total-price">{{ number_format($product->discount_price ?? $product->price, 0, ',', '.') }}₫</span>
-                                            </a> --}}
-                                            {{-- <a href="#compare" data-bs-toggle="modal" aria-controls="compare"
-                                               class="box-icon hover-tooltip compare show-compare">
-                                                <span class="icon icon-compare"></span>
-                                                <span class="tooltip text-caption-2">So sánh</span>
-                                            </a>
-                                            <a href="javascript:void(0);" class="box-icon hover-tooltip text-caption-2 wishlist btn-icon-action">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip text-caption-2">Yêu thích</span>
-                                            </a> --}}
+                                            <button type="submit" class="tf-btn btn-onsurface flex-grow-1 add-to-cart-btn"
+                                                data-product-id="{{ $product->id }}">
+                                                <span>Thêm vào giỏ</span>
+                                            </button>
                                         </div>
-                                        <a href="{{ route('checkout') }}" class="tf-btn btn-primary w-full">Mua ngay</a>
+                                        {{-- <a href="{{ route('checkout') }}" class="tf-btn btn-primary w-full">Mua ngay</a> --}}
                                     </div>
                                 </div>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                             </form>
                             <ul class="tf-product-info-sku">
                                 <li style="padding-top: 14px;">
@@ -179,26 +171,6 @@ $(function(){
         let val = parseInt($input.val()) || 1;
         val = $(this).hasClass('btn-increase') ? val+1 : Math.max(val-1,1);
         $input.val(val);
-        $('.add-to-cart-btn').data('quantity', val);
-    });
-    // Thêm vào giỏ
-    $(document).on('click', '.add-to-cart-btn', function(e){
-        e.preventDefault();
-        let pid = $(this).data('product-id');
-        let qty = $('.quantity-product').val();
-        $.post('{{ route("cart.add") }}', {
-            _token: '{{ csrf_token() }}',
-            product_id: pid,
-            quantity: qty
-        }, function(res){
-            if(res.success){
-                // Mở modal giỏ hàng
-                if (typeof bootstrap !== 'undefined') {
-                    var modal = new bootstrap.Modal(document.getElementById('shoppingCart'));
-                    modal.show();
-                }
-            }
-        });
     });
 });
 </script>
