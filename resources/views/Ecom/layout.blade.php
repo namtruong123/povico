@@ -77,19 +77,19 @@ $(function() {
         const quantity = item.quantity;
 
         const itemHtml = `
-            <div class="tf-mini-cart-item">
+            <div class="tf-mini-cart-item" style="border-bottom: 1px solid #c4c4c4;">
               <div class="tf-mini-cart-image">
                 <img src="${item.image ? item.image : ''}" width="40" alt="${item.name}">
               </div>
               <div class="tf-mini-cart-info">
                 <p>${item.name}</p>
-                <div class="wg-quantity">
+                <div class="wg-quantity" style="margin-bottom: 10px;">
                   <button type="button" class="btn-quantity1 btn-decrease1" data-id="${productId}">−</button>
                   <input type="text" data-id="${productId}" class="quantity-product1" value="${quantity}">
                   <button type="button" class="btn-quantity1 btn-increase1" data-id="${productId}">+</button>
                 </div>
-                <button type="button" class="tf-btn-remove btn-remove-item" data-id="${productId}">Xóa</button>
                 <span>${priceText} x ${quantity}</span>
+                <button type="button" class="tf-btn-remove btn-remove-item icon-close" data-id="${productId}" style="margin-left: 20px;text-decoration: none;"></button>
               </div>
             </div>
         `;
