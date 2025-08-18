@@ -16,7 +16,7 @@
                             có mặt! Tô điểm vẻ đẹp hiện đại cho ngôi nhà bạn.</p>
                     </div>
                     <div class="right wow fadeInUp">
-                        <a href="shop-default.html" class="btn-line">
+                        <a href="{{ route('product.all') }}" class="btn-line">
                             <span>Xem tất cả sản phẩm</span>
                             <i class="icon-arrow-up-right"></i>
                         </a>

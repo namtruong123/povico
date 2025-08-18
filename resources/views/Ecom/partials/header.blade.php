@@ -121,8 +121,8 @@
                 </div> 
                 <div class="col-xl-2 col-8 d-flex justify-content-center">
                     <a href="{{ route('ecom.home') }}" class="logo-header d-flex">
-                        <img src="{{ asset('assets/frontend/images/logo/logo-white.svg') }}" alt="logo" class="logo" style="{{ $isWhiteHeader ? '' : 'display:none;' }}">
-                        <img src="{{ asset('assets/frontend/images/logo/logo.svg') }}" alt="logo" class="logo-black" style="{{ $isWhiteHeader ? 'display:none;' : '' }}">
+                        <img src="{{ asset('assets/frontend/images/logo/povico_logo.png') }}" alt="logo" class="logo" style="max-width: 100%; height: 95px; {{ $isWhiteHeader ? '' : 'display:none;' }}">
+                        <img src="{{ asset('assets/frontend/images/logo/povico_logo.png') }}" alt="logo" class="logo-black" style="max-width: 100%; height: 95px; {{ $isWhiteHeader ? 'display:none;' : '' }}">
                     </a>
                 </div>
                 <div class="col-xl-5 col-2">
@@ -135,7 +135,7 @@
                         <li class="nav-cart">
                             <a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item {{ $isWhiteHeader ? 'text_white' : 'text-light' }}">
                                 <span class="icon icon-cart"></span>
-                                <span id="cart-count" class="count-box text-button-small">{{ collect(session('cart', []))->sum('quantity') }}</span>
+                                <span class="count-box text-button-small">{{ count(session('cart', [])) }}</span>
                             </a>
                         </li>
                     </ul>
